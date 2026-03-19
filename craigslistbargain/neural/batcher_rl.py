@@ -383,6 +383,8 @@ class Batch(object):
         if data is None:
             return data
         tensor = cls.to_tensor(data, dtype)
+        if tensor is None:
+            return None
         var = tensor
         return var.cuda() if cuda else var
 
