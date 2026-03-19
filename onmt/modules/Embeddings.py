@@ -33,8 +33,7 @@ class PositionalEncoding(nn.Module):
         # We must wrap the self.pe in Variable to compute, not the other
         # way - unwrap emb(i.e. emb.data). Otherwise the computation
         # wouldn't be watched to build the compute graph.
-        emb = emb + self.pe[:emb.size(0, :1, :emb.size(2)]
-                             .expand_as(emb), requires_grad=False)
+        emb = emb + self.pe[:emb.size(0), :1, :emb.size(2)].expand_as(emb)
         emb = self.dropout(emb)
         return emb
 

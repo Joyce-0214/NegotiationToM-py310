@@ -7,7 +7,8 @@ import re
 import argparse
 import torch
 import torch.nn as nn
-from torch.autograd import Function,from collections import namedtuple
+from torch.autograd import Function
+from collections import namedtuple
 
 
 # For command-line option parsing

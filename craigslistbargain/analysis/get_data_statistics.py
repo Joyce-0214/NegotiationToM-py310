@@ -81,7 +81,7 @@ def get_overlap_correlation(transcripts, surveys, questions=("persuasive", "nego
     return correlations
 
 
-def compute.core.statistics(transcripts, stats, surveyed_chats):
+def compute_core_statistics(transcripts, stats, surveyed_chats):
     total_turns = {"total": 0.}
     total_tokens = {"total": 0.}
     total_chats = {"total": 0.}

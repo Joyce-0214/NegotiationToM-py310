@@ -39,7 +39,7 @@ def sorted_candidates(candidates):
     '''
     [('a', 2), ('b', 8)] => [('b', 8), ('a', 2)]
     '''
-    return sorted(candidates, key=lambda (token, weight) : weight, reverse=True)
+    return sorted(candidates, key=lambda x: x[1], reverse=True)
 
 def softmax(x):
     """Compute softmax values for each sets of scores in x."""
