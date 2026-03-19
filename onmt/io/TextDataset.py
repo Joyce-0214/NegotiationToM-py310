@@ -7,7 +7,7 @@ import codecs
 import sys
 
 import torch
-import torchtext
+from onmt.io.torchtext_compat import Field
 
 from onmt.Utils import aeq
 from onmt.io.DatasetBase import (ONMTDatasetBase, UNK_WORD,
@@ -188,21 +188,21 @@ class TextDataset(ONMTDatasetBase):
         """
         fields = {}
 
-        fields["src"] = torchtext.data.Field(
+        fields["src"] = Field(
             pad_token=PAD_WORD,
             include_lengths=True)
 
         for j in range(n_src_features):
             fields["src_feat_"+str(j)] = \
-                torchtext.data.Field(pad_token=PAD_WORD)
+                Field(pad_token=PAD_WORD)
 
-        fields["tgt"] = torchtext.data.Field(
+        fields["tgt"] = Field(
             init_token=BOS_WORD, eos_token=EOS_WORD,
             pad_token=PAD_WORD)
 
         for j in range(n_tgt_features):
             fields["tgt_feat_"+str(j)] = \
-                torchtext.data.Field(init_token=BOS_WORD, eos_token=EOS_WORD,
+                Field(init_token=BOS_WORD, eos_token=EOS_WORD,
                                      pad_token=PAD_WORD)
 
         def make_src(data, vocab, is_train):
@@ -214,8 +214,8 @@ class TextDataset(ONMTDatasetBase):
                     alignment[j, i, t] = 1
             return alignment
 
-        fields["src_map"] = torchtext.data.Field(
-            use_vocab=False, tensor_type=torch.FloatTensor,
+        fields["src_map"] = Field(
+            use_vocab=False, dtype=torch.float,
             postprocessing=make_src, sequential=False)
 
         def make_tgt(data, vocab, is_train):
@@ -225,12 +225,12 @@ class TextDataset(ONMTDatasetBase):
                 alignment[:sent.size(0), i] = sent
             return alignment
 
-        fields["alignment"] = torchtext.data.Field(
-            use_vocab=False, tensor_type=torch.LongTensor,
+        fields["alignment"] = Field(
+            use_vocab=False, dtype=torch.long,
             postprocessing=make_tgt, sequential=False)
 
-        fields["indices"] = torchtext.data.Field(
-            use_vocab=False, tensor_type=torch.LongTensor,
+        fields["indices"] = Field(
+            use_vocab=False, dtype=torch.long,
             sequential=False)
 
         return fields
