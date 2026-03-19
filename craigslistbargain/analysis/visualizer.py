@@ -38,10 +38,10 @@ class Visualizer(BaseVisualizer):
 
     def print_results(self, results):
         systems = sorted(results.keys())
-        print '{:<20s} {:<10s} {:<10s} {:<10s} {:<10s}'.format('system', 'success', 'margin', 'length', '#examples')
+        print('{:<20s} {:<10s} {:<10s} {:<10s} {:<10s}'.format('system', 'success', 'margin', 'length', '#examples'))
         for system in systems:
             res = results[system]
-            print '{:<20s} {:<10.2f} {:<10.2f} {:<10.2f} {:<10d}'.format(
+            print('{:<20s} {:<10.2f} {:<10.2f} {:<10.2f} {:<10d}'.format()
                     system,
                     res['success rate'],
                     res['average margin'],

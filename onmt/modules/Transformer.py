@@ -4,7 +4,6 @@ Implementation of "Attention is All You Need"
 
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 import numpy as np
 
 import onmt
@@ -132,7 +131,7 @@ class TransformerEncoder(EncoderBase):
             out = self.transformer[i](out, mask)
         out = self.layer_norm(out)
 
-        return Variable(emb.data), out.transpose(0, 1).contiguous()
+        return emb.data, out.transpose(0, 1).contiguous()
 
 
 class TransformerDecoderLayer(nn.Module):

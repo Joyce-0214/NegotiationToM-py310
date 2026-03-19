@@ -135,7 +135,7 @@ if __name__ == '__main__':
     N = sum([len(l) for l in listings])
     for listing, fraction in izip(listings, fractions):
         n = int(N * fraction)
-        print listing[0]['category'], len(listing), fraction, n
+        print(listing[0]['category'], len(listing), fraction, n)
         sampled_listings.append(listing[:n])
     listings = [x for l in sampled_listings for x in l]
     N = len(listings)
@@ -149,22 +149,22 @@ if __name__ == '__main__':
     scenario_generator = generate_scenario(schema, base_price, price_unit, args.discounts, listings)
     for i, s in enumerate(scenario_generator):
         if i % 100 == 0:
-            print i
+            print(i)
         if i < args.skip:
             continue
         if len(scenario_list) == args.num_scenarios:
             break
         scenario_list.append(s)
     if len(scenario_list) < args.num_scenarios:
-        print 'Not enough listings: {} scenarios generated.'.format(len(scenario_list))
+        print('Not enough listings: {} scenarios generated.'.format(len(scenario_list)))
     scenario_db = ScenarioDB(scenario_list)
     write_json(scenario_db.to_dict(), args.scenarios_path)
 
     for i in range(min(10, len(scenario_db.scenarios_list))):
-        print '---------------------------------------------------------------------------------------------'
-        print '---------------------------------------------------------------------------------------------'
+        print('---------------------------------------------------------------------------------------------')
+        print('---------------------------------------------------------------------------------------------')
         scenario = scenario_db.scenarios_list[i]
-        print "Scenario id: %s" % scenario.uuid
+        print("Scenario id: %s" % scenario.uuid)
         for agent in (0, 1):
             kb = scenario.kbs[agent]
             kb.dump()
@@ -173,6 +173,6 @@ if __name__ == '__main__':
     for s in scenario_list:
         cat = s.kbs[0].facts['item']['Category']
         num_listings_per_category[cat] += 1
-    for k, v in num_listings_per_category.iteritems():
-        print k, v
-    print '%d scenarios generated' % len(scenario_list)
+    for k, v in num_listings_per_category.items():
+        print(k, v)
+    print('%d scenarios generated' % len(scenario_list))

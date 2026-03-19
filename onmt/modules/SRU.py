@@ -7,8 +7,7 @@ import re
 import argparse
 import torch
 import torch.nn as nn
-from torch.autograd import Function, Variable
-from collections import namedtuple
+from torch.autograd import Function,from collections import namedtuple
 
 
 # For command-line option parsing
@@ -543,7 +542,7 @@ class SRUCell(nn.Module):
 
     def get_dropout_mask_(self, size, p):
         w = self.weight.data
-        return Variable(w.new(*size).bernoulli_(1-p).div_(1-p))
+        return w.new(*size.bernoulli_(1-p).div_(1-p))
 
 
 class SRU(nn.Module):
@@ -603,8 +602,8 @@ class SRU(nn.Module):
         assert input.dim() == 3  # (len, batch, n_in)
         dir_ = 2 if self.bidirectional else 1
         if c0 is None:
-            zeros = Variable(input.data.new(
-                input.size(1), self.n_out*dir_
+            zeros = input.data.new(
+                input.size(1, self.n_out*dir_
             ).zero_())
             c0 = [zeros for i in range(self.depth)]
         else:

@@ -42,7 +42,7 @@ class Analyzer(object):
     def intent_sequence_perplexity(self, intent_sequences, n=3):
         H = 0.
         N = 0
-        for intent, sequences in intent_sequences.iteritems():
+        for intent, sequences in intent_sequences.items():
             model = self.build_lm(sequences, n)
             H_, N_ = self.total_entropy(model, sequences)
             H += H_
@@ -108,7 +108,7 @@ class Analyzer(object):
         # Percentage intents
         #s = float(sum(stats['intents'].values()))
         #stats['intents'] = sorted(
-        #        [(k, v, v / s) for k, v in stats['intents'].iteritems()],
+        #        [(k, v, v / s) for k, v in stats['intents'].items()],
         #        key=lambda x: x[1], reverse=True)
 
         self.print_stats(stats, 'parser stats')
@@ -120,7 +120,7 @@ class Analyzer(object):
 
         # Most likely sequence
         action_seq = [{'context': ('<start>', '<start>')}]
-        for i in xrange(10):
+        for i in range(10):
             state = action_seq[-1]
             context = state['context']
 

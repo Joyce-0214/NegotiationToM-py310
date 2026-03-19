@@ -3,7 +3,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from torch.autograd import Variable
 from torch.nn.utils.rnn import pack_padded_sequence as pack
 from torch.nn.utils.rnn import pad_packed_sequence as unpack
 
@@ -634,7 +633,7 @@ class RNNDecoderState(DecoderState):
         # Init the input feed.
         batch_size = self.hidden[0].size(1)
         h_size = (batch_size, hidden_size)
-        self.input_feed = Variable(self.hidden[0].data.new(*h_size).zero_(),
+        self.input_feed = self.hidden[0].new_zeros(*h_size,
                                    requires_grad=False).unsqueeze(0)
 
     @property

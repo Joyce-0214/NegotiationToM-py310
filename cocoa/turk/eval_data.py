@@ -15,7 +15,7 @@ class EvalData(object):
         self.data = data
 
     def dump(self, output):
-        print 'Dumping data to {}'.format(output)
+        print('Dumping data to {}'.format(output))
         write_json(self.data, output)
 
     def sample_examples(self, num_context, evaluated=set(), systems=None, pairs=None, qids=None):
@@ -37,7 +37,7 @@ class EvalData(object):
         else:
             example_ids = qids
         if num_context > len(example_ids):
-            print 'WARNING: wanted {} examples, only has {}'.format(num_context, len(example_ids))
+            print('WARNING: wanted {} examples, only has {}'.format(num_context, len(example_ids)))
             num_context = len(example_ids)
         selected_ids = random.sample(example_ids, num_context)
         examples = []
@@ -45,7 +45,7 @@ class EvalData(object):
             responses = self.data[id_]['responses']
             context = self.data[id_]['context']
             if not pairs:
-                for system, response in responses.iteritems():
+                for system, response in responses.items():
                     if systems is not None and not system in systems:
                         continue
                     qid = '{system}-{ex_id}'.format(system=system, ex_id=id_)

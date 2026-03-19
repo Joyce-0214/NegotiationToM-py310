@@ -49,7 +49,7 @@ class CraigslistSpider(Spider):
 
     def parse(self, response):
         urls = []
-        for i in xrange(self.num_result_pages):
+        for i in range(self.num_result_pages):
             urls.append(response.urljoin('?s=%d' % (i * self.num_item_per_page)))
         # Search result
         for url in urls:

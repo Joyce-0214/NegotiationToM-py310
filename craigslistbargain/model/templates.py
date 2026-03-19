@@ -81,7 +81,7 @@ class Templates(object):
             counts = templates['count'].values
             return self.sample(counts, templates, T)
 
-        print 'WARNING: no available templates found, returning a random one'
+        print('WARNING: no available templates found, returning a random one')
         counts = self.templates['count'].values
         return self.sample(counts, self.templates, T)
 
@@ -98,15 +98,15 @@ class Templates(object):
             category, role, context_tag, response_tag = group
             if response_tag == 'offer':
                 continue
-            print '--------------------------------------'
-            print 'category={}, role={}, context={}, response={}'.format(category, role, context_tag, response_tag)
-            print '--------------------------------------'
+            print('--------------------------------------')
+            print('category={}, role={}, context={}, response={}'.format(category, role, context_tag, response_tag))
+            print('--------------------------------------')
             rows = [x[1] for x in df.get_group(group).iterrows()]
             rows = sorted(rows, key=lambda r: r['count'], reverse=True)
             for i, row in enumerate(rows):
                 if i == n:
                     break
-                print row['count'], row['response'].encode('utf-8')
+                print(row['count'], row['response'].encode('utf-8'))
 
 class TemplateExtractor(object):
     stopwords = set(stopwords.words('english'))
@@ -294,11 +294,11 @@ class TemplateExtractor(object):
         write_json([ex.to_dict() for ex in examples], log)
 
     def ngrams(self, tokens, n=1):
-        for i in xrange(max(1, len(tokens)-n+1)):
+        for i in range(max(1, len(tokens)-n+1)):
             yield tokens[i:i+n]
 
     def detokenize_templates(self):
-        #for k, temps in self.templates.iteritems():
+        #for k, temps in self.templates.items():
         #    for temp in temps:
         for row in self.templates:
             row['response'] = detokenize(row['response'])
@@ -311,7 +311,7 @@ class TemplateExtractor(object):
             for ngram in self.ngrams(tokens, n):
                 counts.append(self.ngram_counter[ngram])
             if not counts:
-                print tokens
+                print(tokens)
                 import sys; sys.exit()
             mean_count = np.mean(counts)
             row['count'] = mean_count
@@ -349,15 +349,15 @@ if __name__ == '__main__':
         tag_counts.append((tag, t[t.response_tag == tag].shape[0] / float(t.shape[0])))
     tag_counts = sorted(tag_counts, key=lambda x: x[1], reverse=True)
     for x in tag_counts:
-        print x
+        print(x)
 
     import sys; sys.exit()
 
     templates.dump(n=10)
     templates.build_tfidf()
-    print templates.search('<start>', category='bike', role='seller')
+    print(templates.search('<start>', category='bike', role='seller'))
 
     if args.debug:
         templates.dump()
         template = templates.choose(category='bike', role='buyer', response_tag='unknown')
-        print template
+        print(template)

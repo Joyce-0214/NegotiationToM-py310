@@ -142,7 +142,7 @@ class Dialogue(object):
         self.scenario_id = self.get_scenario_id(post_id, self.buyer_target)
         self.turns = turns
         self.outcome = outcome
-        self.eval_scores = {kbs[agent_id].facts['personal']['Role']: s for agent_id, s in scores.iteritems()}
+        self.eval_scores = {kbs[agent_id].facts['personal']['Role']: s for agent_id, s in scores.items()}
         self.margins = self.compute_margin()
 
     @classmethod
@@ -209,10 +209,10 @@ class Dialogue(object):
     @classmethod
     def parse_scores(cls, raw_scores):
         agent_scores = {}
-        for agent_id, scores in raw_scores.iteritems():
+        for agent_id, scores in raw_scores.items():
             agent_id = int(agent_id)
             question_scores = {}
-            for question, score in scores.iteritems():
+            for question, score in scores.items():
                 if question in cls.eval_questions:
                     question_scores[question] = int(score)
             agent_scores[agent_id] = question_scores

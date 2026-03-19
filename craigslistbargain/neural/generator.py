@@ -1,5 +1,4 @@
 import torch
-from torch.autograd import Variable
 import onmt.io
 from onmt.Utils import aeq, use_gpu
 

@@ -36,7 +36,7 @@ class HTMLVisualizer(object):
         if event.action == 'message':
             s = event.data
         elif event.action == 'eval':
-            s = 'EVAL {utterance} || {tags}'.format(utterance=event.data['utterance'], tags=' '.join([k for k, v in event.data['labels'].iteritems() if v == 1]))
+            s = 'EVAL {utterance} || {tags}'.format(utterance=event.data['utterance'], tags=' '.join([k for k, v in event.data['labels'].items() if v == 1]))
         return s
 
     @classmethod
@@ -170,7 +170,7 @@ class HTMLVisualizer(object):
     def render_response(cls, responses, agent_dict):
         html_lines = ["<div class=\"survey\">"]
         html_lines.append('<div class=\"divTitle\">Survey</div>')
-        for agent_id, response in responses.iteritems():
+        for agent_id, response in responses.items():
             html_lines.append('<div class=\"response\">')
             response_html = cls._render_response(response, int(agent_id), agent_dict[agent_id])
             html_lines.extend(response_html)
@@ -303,10 +303,10 @@ class HTMLVisualizer(object):
             if responses:
                 dialogue_response = responses[chat['uuid']]
                 question_scores = defaultdict(list)
-                for agent_id, scores in dialogue_response.iteritems():
+                for agent_id, scores in dialogue_response.items():
                     for question in cls.questions:
                         question_scores[question].extend(scores[question])
-                for question, scores in question_scores.iteritems():
+                for question, scores in question_scores.items():
                     row[question] = np.mean(scores)
             metadata['data'].append(row)
         write_json(metadata, os.path.join(outdir, 'metadata.json'))

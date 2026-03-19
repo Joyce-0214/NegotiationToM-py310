@@ -313,8 +313,8 @@ class Dialogue(object):
 
     def kb_context_to_int(self):
         self.category = self.mappings['cat_vocab'].to_ind(self.category)
-        self.title = map(self.mappings['kb_vocab'].to_ind, self.title)
-        self.description = map(self.mappings['kb_vocab'].to_ind, self.description)
+        self.title = list(map(self.mappings['kb_vocab'].to_ind, self.title))
+        self.description = list(map(self.mappings['kb_vocab'].to_ind, self.description))
 
     def lf_to_int(self):
         '''

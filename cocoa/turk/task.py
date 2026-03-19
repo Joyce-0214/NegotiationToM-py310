@@ -65,7 +65,7 @@ class Task(object):
 
     def dump_db(self):
         write_json(self.db, self.db_path)
-        print 'HIT results dumped to {}'.format(self.db_path)
+        print('HIT results dumped to {}'.format(self.db_path))
 
     def create_hit(self, question):
         hit = self.mtc.create_hit(hit_type=self.hit_type_id, question=question, lifetime=self.lifetime, max_assignments=self.max_assignments)
@@ -86,32 +86,32 @@ class Task(object):
                 hit_id = self.create_hit(q)
                 self.db[hit_id] = {'data': q_data}
             self.dump_db()
-            print "Your HIT has been created. You can see it at this link:"
-            print "https://workersandbox.mturk.com/mturk/preview?groupId={}".format(self.hit_type_id)
+            print("Your HIT has been created. You can see it at this link:")
+            print("https://workersandbox.mturk.com/mturk/preview?groupId={}".format(self.hit_type_id))
         else:
-            print 'Abort'
+            print('Abort')
 
     def check_workers(self):
         """Print workers' answers to check spammers.
         """
         worker_answers = defaultdict(lambda : defaultdict(int))
-        for hit_id, hit_info in self.db.iteritems():
-            for assignment_id, result in hit_info.iteritems():
+        for hit_id, hit_info in self.db.items():
+            for assignment_id, result in hit_info.items():
                 worker_id = result['worker_id']
                 answers = result['answers']
                 for answer in answers:
                     if answer['qid'] == 'comment':
                         continue
                     worker_answers[worker_id][int(answer['answer'])] += 1
-        for worker, answers in worker_answers.iteritems():
-            print worker, [answers[score] for score in xrange(-2, 3)]
+        for worker, answers in worker_answers.items():
+            print(worker, [answers[score] for score in range(-2, 3)])
 
     @classmethod
     def get_evaluated_qids(cls, db_path):
         db = read_json(db_path)
         qids = set()
-        for hit_id, hit_info in db.iteritems():
-            for assignment_id, result in hit_info.iteritems():
+        for hit_id, hit_info in db.items():
+            for assignment_id, result in hit_info.items():
                 answers = result['answers']
                 for answer in answers:
                     if answer['qid'] == 'comment':
@@ -134,10 +134,10 @@ class Task(object):
         """
         results = []
         num_reviewable_assignments = 0
-        for hit_id, hit_info in self.db.iteritems():
+        for hit_id, hit_info in self.db.items():
             try:
                 assignments = self.mtc.get_assignments(hit_id)
-                print hit_id, len(assignments)
+                print(hit_id, len(assignments))
             except MTurkRequestError:
                 continue
             if assignments:
@@ -150,7 +150,7 @@ class Task(object):
                             'answers': answers,
                             }
                     num_reviewable_assignments += 1
-        print '{} assignments ready'.format(num_reviewable_assignments)
+        print('{} assignments ready'.format(num_reviewable_assignments))
         self.dump_db()
 
 class EvalTask(Task):

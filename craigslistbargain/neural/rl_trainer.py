@@ -7,7 +7,6 @@ from collections import defaultdict
 
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 from cocoa.neural.rl_trainer import Statistics
 

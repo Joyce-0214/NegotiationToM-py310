@@ -11,7 +11,6 @@ from collections import defaultdict
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.autograd import Variable
 
 from core.controller import Controller
 from .utterance import UtteranceBuilder
@@ -256,10 +255,10 @@ class RLTrainer(BaseTrainer):
     def split_by_strategy(t, s, s_num=5):
         if s is None:
             return t
-        s = torch.tensor(s, dtype=torch.uint8, device=t.device).reshape(-1, 1)
+        s = torch.tensor(s, dtype=torch.int64, device=t.device).reshape(-1, 1)
         ret = [0]*s_num
         for i in range(s_num):
-            ret[i] = torch.masked_select(t, s == i)
+            ret[i] = torch.masked_select(t, (s == i).bool())
         # ret[0]=torch.masked_select(t, s)
         # ret[1]=torch.masked_select(t, 1-s)
         return ret

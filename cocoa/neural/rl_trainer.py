@@ -9,7 +9,6 @@ import sys
 
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 from onmt.Trainer import Statistics as BaseStatistics
 

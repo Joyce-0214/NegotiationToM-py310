@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 from onmt.modules import BottleLinear, Elementwise
 from onmt.Utils import aeq
@@ -34,7 +33,7 @@ class PositionalEncoding(nn.Module):
         # We must wrap the self.pe in Variable to compute, not the other
         # way - unwrap emb(i.e. emb.data). Otherwise the computation
         # wouldn't be watched to build the compute graph.
-        emb = emb + Variable(self.pe[:emb.size(0), :1, :emb.size(2)]
+        emb = emb + self.pe[:emb.size(0, :1, :emb.size(2)]
                              .expand_as(emb), requires_grad=False)
         emb = self.dropout(emb)
         return emb

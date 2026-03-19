@@ -10,7 +10,7 @@ def normalize_weights(weights):
         return []
     s = sum(weights)
     if s == 0:
-        print 'WARNING: zero normalization'
+        print('WARNING: zero normalization')
         return weights
     return [1.0 * weight / s for weight in weights]
 

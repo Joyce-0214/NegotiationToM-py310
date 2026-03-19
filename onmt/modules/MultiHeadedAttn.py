@@ -1,7 +1,6 @@
 import math
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 from onmt.Utils import aeq
 from onmt.modules.UtilClass import BottleLinear, BottleSoftmax
@@ -132,7 +131,7 @@ class MultiHeadedAttention(nn.Module):
 
             scaled = scaled.view(b, self.head_count, l, dim_per_head)
             mask = mask.unsqueeze(1).expand_as(scaled)
-            scaled = scaled.masked_fill(Variable(mask), -1e18) \
+            scaled = scaled.masked_fill(mask.bool(), -1e18) \
                            .view(bh, l, dim_per_head)
         attn = self.sm(scaled)
         # Return one attn

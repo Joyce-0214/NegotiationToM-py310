@@ -257,14 +257,14 @@ if __name__ == '__main__':
         if Preprocessor.skip_example(example):
             continue
         parse_dialogue(example, price_tracker, counter)
-    print '% unk:', counter['unk_lf'] / float(counter['total_lf'])
-    print 'intent seqs:'
+    print('% unk:', counter['unk_lf'] / float(counter['total_lf']))
+    print('intent seqs:')
     seqs = counter['seqs']
     for first in seqs:
         total_first = sum([sum(seqs[first][a].values()) for a in seqs[first]])
         unks = sum([sum(seqs[first][a].values()) for a in ('unknown',)])
         unks = float(unks) / total_first
-        print first, 'unk={:.3f}'.format(unks)
+        print(first, 'unk={:.3f}'.format(unks))
         for second in seqs[first]:
             if second == 'unknown':
                 continue
@@ -273,5 +273,5 @@ if __name__ == '__main__':
                 continue
             unks = seqs[first][second]['unknown']
             unks = float(unks) / total
-            print first, second, '{:.3f}'.format(total/float(total_first)), 'unk={:.3f}'.format(unks)
-        print '------------------------'
+            print(first, second, '{:.3f}'.format(total/float(total_first)), 'unk={:.3f}'.format(unks))
+        print('------------------------')

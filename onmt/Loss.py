@@ -7,7 +7,6 @@ This includes: LossComputeBase and the standard NMTLossCompute, and
 from __future__ import division
 import torch
 import torch.nn as nn
-from torch.autograd import Variable
 
 import onmt
 import onmt.io

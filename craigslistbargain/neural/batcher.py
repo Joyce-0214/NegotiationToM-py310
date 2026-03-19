@@ -2,7 +2,6 @@ import numpy as np
 from itertools import zip_longest
 
 import torch
-from torch.autograd import Variable
 
 from .symbols import markers
 
@@ -76,7 +75,7 @@ class Batch(object):
     @classmethod
     def to_variable(cls, data, dtype, cuda=False):
         tensor = cls.to_tensor(data, dtype)
-        var = Variable(tensor)
+        var = tensor
         return var.cuda() if cuda else var
 
     def sort_by_length(self, inputs):
