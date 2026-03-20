@@ -20,7 +20,7 @@ from systems import get_system
 from neural.rl_trainer import RLTrainer
 from neural import build_optim
 
-from multi_manager import MultiManager
+from multi_manager_debug import MultiManager
 from multi_trainer import MultiTrainer
 
 from multi_manager_debug import MultiManager as MultiManager_DEBUG, MultiRunner as MultiTrainer_DEBUG
