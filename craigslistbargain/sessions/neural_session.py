@@ -12,7 +12,6 @@ from core.event import Event
 from .session import Session
 from neural.preprocess import markers, Dialogue
 from neural.batcher_rl import RLBatch, ToMBatch, RawBatch
-# from .tom_model import ToMModel  # TODO: file missing from original repo
 import copy
 import time
 import json
