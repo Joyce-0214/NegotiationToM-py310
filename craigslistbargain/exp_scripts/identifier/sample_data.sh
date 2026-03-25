@@ -5,13 +5,13 @@ if [ $# -ge 2 ]; then
 fi
 EXP_NAME="hard_pmask_7_"${SEED}
 # tom_itentity_test
-mkdir checkpoint/${EXP_NAME}
+mkdir -p checkpoint/${EXP_NAME}
 PYTHONPATH=. python multi_rl.py --schema-path data/craigslist-schema.json \
 --scenarios-path data/train-scenarios.json \
 --valid-scenarios-path data/dev-scenarios.json \
 --price-tracker data/price_tracker.pkl \
 --agent-checkpoints checkpoint/language/model_best.pt checkpoint/language/model_best.pt \
---model-path checkpoint/hard_pmask --mappings mappings/language \
+--model-path checkpoint/${EXP_NAME} --mappings mappings/language \
 --optim adam --rnn-type RNN --rnn-size 300 --max-grad-norm -1 \
 --agents pt-neural pt-neural-r \
 --report-every 50 --max-turns 20 --num-dialogues 8960 \

@@ -449,7 +449,10 @@ class HistoryModel(nn.Module):
             # return emb, next_hidden, (identity)
             e_output = self.encoder(*input)
 
-        self.hidden_vec = e_output[-1].cpu().data.numpy()
+        if e_output is not None and len(e_output) > 0 and e_output[-1] is not None:
+            self.hidden_vec = e_output[-1].detach().cpu().numpy()
+        else:
+            self.hidden_vec = None
 
         d_output = self.decoder(e_output[0])
         return (d_output,) + e_output[1:]

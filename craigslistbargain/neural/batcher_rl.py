@@ -433,7 +433,7 @@ class RawBatch(Batch):
             if isinstance(v, torch.Tensor):
                 setattr(self, k, v.to(device=device))
             elif isinstance(v, tuple) and (k == 'state' or k == 'act'):
-                setattr(self, k, tuple([vv.to(device) for vv in v]))
+                setattr(self, k, tuple([vv.to(device) if vv is not None else None for vv in v]))
             elif isinstance(v, list) and k == 'uttr':
                 setattr(self, k, [vv.to(device) for vv in v])
 
@@ -467,7 +467,14 @@ class RawBatch(Batch):
                     # state[2]
                     if isinstance(tmp[0], list):
                         for i in range(len(tmp)):
-                            tmp[i] = torch.cat(tmp[i], dim=0)
+                            if all(x is None for x in tmp[i]):
+                                tmp[i] = None
+                            elif any(x is None for x in tmp[i]):
+                                ref = next(x for x in tmp[i] if x is not None)
+                                tmp[i] = [torch.zeros_like(ref) if x is None else x for x in tmp[i]]
+                                tmp[i] = torch.cat(tmp[i], dim=0)
+                            else:
+                                tmp[i] = torch.cat(tmp[i], dim=0)
                         tmp = tuple(tmp)
                     elif isinstance(tmp[0], torch.Tensor):
                         tmp = torch.cat(tmp, dim=0)
