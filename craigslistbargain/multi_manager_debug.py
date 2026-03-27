@@ -464,8 +464,10 @@ class MultiManager():
             with open(eval_json, 'w') as f:
                 json.dump(tmpd, f)
 
-            print('=' * 5 + ' [reward: {:.3f}\t utility: {:.3f}\t success_rate: {:.3f}]'.
-                  format(tmpd['reward'], tmpd['utility'], tmpd["success_rate"]))
+            print("tmpd keys:", list(tmpd.keys()))
+            print("tmpd:", tmpd)
+            print('=' * 5 + ' [reward: {}\t utility: {}\t success_rate: {}]'.
+                  format(tmpd.get('reward', 'NA'), tmpd.get('utility', 'NA'), tmpd.get("success_rate", 'NA')))
 
             eval_json = 'logs/{}/eval_separate_{}.json'.format(args.name, epoch)
             tmpds = []

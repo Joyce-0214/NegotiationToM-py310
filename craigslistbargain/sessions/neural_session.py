@@ -684,7 +684,15 @@ class PytorchNeuralSession(NeuralSession):
             # Using pact
             # 0: insist, 3: decay 0.1, 2: half of last price, 1: agree
             p_act = output_data['original_price']
+            raw_price_before_override = output_data.get('price')
             p = self._pact_to_price(p_act, last_prices)
+
+            print("DEBUG pact:",
+                "role=", self.kb.facts['personal']['Role'],
+                "last_prices=", last_prices,
+                "raw_price_before_override=", raw_price_before_override,
+                "p_act=", p_act,
+                "mapped_p=", p)
 
             output_data['original_price'] = p
             if output_data['price'] is not None:

@@ -227,11 +227,14 @@ def annotate_dialogue(dialogue: Dict) -> Dict:
                 seller_prev_price = price
                 seller_first_offer = False
 
+            # If this seller turn didn't mention a price, inherit previous pricing strategy.
+            # This avoids breaking the seller's pricing trajectory on non-price turns.
+            if pricing_strategy == "NONE" and prev_seller_pricing is not None:
+                pricing_strategy = prev_seller_pricing
+
             # Detect switch - separate price, style, and joint switches
             if prev_seller_pricing is not None and prev_seller_style is not None:
-                price_changed = (pricing_strategy != prev_seller_pricing and
-                                pricing_strategy != "NONE" and
-                                prev_seller_pricing != "NONE")
+                price_changed = (pricing_strategy != prev_seller_pricing)
                 style_changed = (language_style != prev_seller_style)
 
                 if price_changed or style_changed:
